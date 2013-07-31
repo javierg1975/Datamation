@@ -25,7 +25,7 @@ import spray.routing.directives.CachingDirectives
 import spray.http._
 
 
-class DemonstratorServiceActor extends Actor with DeparturesService{
+class DatamationServiceActor extends Actor with DeparturesService{
   def actorRefFactory = context
   def receive = runRoute(departuresRoute)
 }
