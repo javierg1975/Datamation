@@ -1,0 +1,31 @@
+<header>
+    <div class="row">
+        <div class="large-12 columns ">
+            <img class="logo" src="images/K_small.png">
+            <hr/>
+            <div class='form'>
+                <div class="row">
+                    <div class="large-3 columns">&nbsp;</div>
+                    <div class="large-6 columns">
+                        <form name="login_frm" ng-submit="login()">
+                            <div class="row">
+                                <label class='form-label'>Username:</label>
+                                <input type="text" ng-model="user_txt" ng-required="!login_frm.user_txt">
+                            </div>
+                            <div class="row">
+                                <label class='form-label'>Password: </label>
+                                <input type="password" ng-model="pass_txt" ng-required="!login_frm.pass_txt">
+                                <button class='submit-btn' type="submit">Login</button>
+                            </div>
+                            <div class="row">
+                                <label class='login-error' ng-show="(login_frm.$error.required && login_frm.$dirty) || isInvalid">{{errorMsg}}</label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="large-3 columns">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<section></section>

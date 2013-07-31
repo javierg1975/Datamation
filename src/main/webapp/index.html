@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="stalker">
+<head>
+    <meta charset="utf-8">
+    <title>Switchboard</title>
+
+    <!--AngularUI-->
+    <link rel="stylesheet" type="text/css" href="css/angular-ui/angular-ui.css">
+
+    <!--JQueryUI and Plugins-->
+    <link type='text/css' href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/base/jquery-ui.css" rel='stylesheet' media='screen' />
+    <link type='text/css' href="css/jstree.css" rel='stylesheet' media='screen' />
+
+    <!--Foundation-->
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/foundation.css" />
+
+    <!--Stalker Styles-->
+    <link type='text/css' href="css/screen.css" rel='stylesheet' media='screen' />
+</head>
+<body ng-view> <!--ng-view: Depending on the selected route, it loads the partial html here. See app.js to check the routes-->
+
+    <!--JQuery Plugins-->
+    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
+    <script src="js/plugins/jquery.jstree.js"></script>
+
+    <!--Foundation-->
+    <script src="lib/foundation.min.js"></script>
+
+    <!--AngularJS lib-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-cookies.min.js"></script>
+    <!-- This needs to go after the JQuery libs-->
+    <script src="lib/angular-ui/angular-ui.js"></script>
+
+    <!--Stalker config file-->
+    <script src="js/app.js"></script>
+
+    <!--Stalker custom modules-->
+    <script src="js/modules/authentication.js"></script>
+    <script src="js/modules/common.js"></script>
+    <script src="js/modules/marketTree.js"></script>
+
+    <script src="js/filters/filters.js"></script>
+    <script src="js/services/services.js"></script>
+    <!--<script src="js/directives/directives.js"></script>-->
+
+    <!--Controllers-->
+    <script src="js/controllers/loginCtrl.js"></script>
+    <script src="js/controllers/logoutCtrl.js"></script>
+    <script src="js/controllers/adminCtrl.js"></script>
+    <script src="js/controllers/profileCtrl.js"></script>
+    <script src="js/controllers/searchCtrl.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<header>
+    <div class="row">
+        <div class="large-12 columns ">
+            <img class="logo" src="images/K_small.png">
+            <nav>
+                <a href="#/search" class="selected"> Search </a> /
+                <a href="#/profile"> Profile </a> /
+                <a ng-show="user.isAdmin" href="#/admin"> Admin </a> /
+                <a href="#/logout"> Logout</a>
+            </nav>
+            <hr/>
+            <div class='form'>
+                <div class="row">
+                    <div class="large-3 columns">&nbsp;</div>
+                    <div class="large-6 columns">
+                        <form name="search_frm" ng-submit="loadFacultyList()">
+                            <div class="row">
+                                <label class='form-label'>Search By:</label>
+                                <select ng-model="search_select" ng-change="resetFacultyList()">
+                                    <option value ="Market">Market</option>
+                                    <option value ="Name or ID">Name or ID</option>
+                                    <option value ="SBU + Postal Code">Postal Code</option>
+                                </select>
+                            </div>
+                            <div class="row" ng-class="{searchRow: search_select == 'Market'}"><!-- Assigns the 'searchRow' class, only if the selected option is 'Market'-->
+                                <label class='form-label' ng-show="search_select">{{search_select}}:</label>
+
+                                <input type="text" ng-model="name_txt" ng-show="search_select == 'Name or ID'">
+
+                                <div class="zipSearch" ng-show="search_select == 'SBU + Postal Code'">
+                                    <select ng-model="sbu_select">
+                                        <option value ="Grad">Grad</option>
+                                        <option value ="Pre-College">PC</option>
+                                        <option value ="Health">Health</option>
+                                        <option value ="Bar Review">Bar</option>
+                                    </select>
+                                    <input type="text" ng-model="zip_txt">
+                                </div>
+
+                                <div class='marketpicker mp_main' ng-show="search_select == 'Market'" ng-click="renderMarketsTree('main')" ui-jq="accordion"><!-- ui-jq: AngularUI 'jQuery Passthrough'. see: modules/marketTree.js-->
+                                    <h3 class='marketpickerTitle'><a href="#">Markets</a></h3>
+                                    <div class='centertree ct_main'>
+                                        <div class='treeMsg'>Loading markets ...</div>
+                                    </div>
+                                </div>
+
+                                <button class='submit-btn' type="submit" ng-show="search_select">Find</button>
+                                <label class='login-error' ng-show="isInvalid && (search_select == 'Market')" >{{errorMsg}}</label><!--style hack for the market tree-->
+                                <div id="spinner" style="display: none;margin-top: 10px"></div>
+                            </div>
+                            <div class="row" ng-show="search_select != 'Market'"><!--style hack for the market tree-->
+                                <label class='login-error' ng-show="isInvalid">{{errorMsg}}</label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="large-3 columns">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<section>
+    <div ng-show="searchReady">
+        <div class="row" ng-show="errorInSearchMsg">
+            <div class="large-12 columns">
+                <p class="search-error">{{errorInSearchMsg}}</p>
+            </div>
+        </div>
+        <div class="row" ng-repeat="faculty in facultyList">
+            <div class="large-12 columns boxContainer">
+                <div class="row">
+                    <div class="large-2 columns">
+                        <div class="panel roleBox roleFont">
+                            {{faculty.role}}
+                        </div>
+                    </div>
+                    <div class="large-10 columns">
+                        <div class="large-12 columns panel detailBox">
+                            <div class="large-4 columns">
+                                <div class="boxLeft">
+                                    <p class="nameFont" ng-click="openFaculty(faculty.kbsTeacherId, faculty.marketsHierarchy)">
+                                        {{faculty.firstName}}
+                                        {{faculty.lastName}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="large-4 columns">
+                                <div class="boxMid infoFont">
+                                    <p>
+                                        Phone:
+                                        <!-- Desktop Only : Skype-->
+                                        <a ng-show="!isMobile" ng-href="callto://{{faculty.phone1 | callToFormat}}">{{faculty.phone1}}</a>
+                                        <!-- Mobile Only-->
+                                        <a ng-show="isMobile" ng-href="tel://{{faculty.phone1 | callToFormat}}">{{faculty.phone1}}</a>
+                                    </p>
+                                    <hr />
+                                    <p>
+                                        Email:
+                                        <!--Only works with FF toDo: test-->
+                                        <a ng-click="mailTo(faculty.email1)">{{faculty.email1}}</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="large-4 columns">
+                                <div class="boxRight infoFont">
+                                    <p>
+                                    Address:
+                                    {{faculty.primaryAddress.city}},
+                                    {{faculty.primaryAddress.stateProvince}}
+                                    {{faculty.primaryAddress.postalCode}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="{{faculty.kbsTeacherId}}" ng-show="faculty.kbsTeacherId == currentFaculty">
+                    <div class="large-12 columns marketsResults panel" ng-bind-html-unsafe="marketsHTML"> <!-- 'marketsHTML' gets loaded in the controller -> function openFaculty() -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
