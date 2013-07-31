@@ -21,7 +21,7 @@ libraryDependencies ++= Seq(
     "io.spray" % "spray-can" % "[1.2-20130712,)",
     "io.spray" %% "spray-json" % "1.2.3",
     "net.virtual-void" %%  "json-lenses" % "0.5.2",
-    "org.mongodb" %% "casbah" % "2.5.0",
+    "org.mongodb" %% "casbah" % "2.6.1",
     "com.novus" %% "salat" % "1.9.2-SNAPSHOT"
 )
 

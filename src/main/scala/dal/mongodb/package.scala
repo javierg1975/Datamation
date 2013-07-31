@@ -40,8 +40,7 @@ package object mongodb{
   def using(collectionName: String) = DefaultMongoLabConnection(collectionName)
 
   object MongoLabsCollections{
-    val competitorClassHistory = DefaultMongoLabConnection(Environment.load("CLASS_HISTORY"))
-    val deferredAddresses = DefaultMongoLabConnection(Environment.load("WEBQL_ENTRIES"))
+    val dataItems = DefaultMongoLabConnection(Environment.load("DATAMATION_ENTRIES"))
   }
 
 

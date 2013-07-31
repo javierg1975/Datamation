@@ -33,15 +33,7 @@ object DemonstratorProtocol extends DefaultJsonProtocol {
     }
   }
 
-  implicit var projectFormat = jsonFormat4(Project)
 
-  implicit var componentFormat = jsonFormat3(Component)
-
-  implicit var fieldFormat = jsonFormat3(FieldDescriptor)
-
-  implicit var issueFormat = jsonFormat4(Issue)
-
-  implicit var jiraFormat = jsonFormat1(JiraResponse)
 
 
 

@@ -6,11 +6,10 @@ import spray.http.StatusCodes._
 import spray.http.MediaTypes._
 import spray.json._
 import spray.httpx.SprayJsonSupport
-import client.jira.IssueBrowser
-import core.{JiraResponse, Issue}
 import scala.concurrent.Future
 import concurrent.ExecutionContext.Implicits.global
 import util.transform.json.DemonstratorProtocol._
+import util.csv.CsvReader
 
 trait Debugger {
   import org.slf4j._
@@ -23,6 +22,9 @@ import akka.pattern.ask
 import spray.routing.HttpService
 import spray.routing.directives.CachingDirectives
 import spray.http._
+import dal.mongodb._
+import core._
+
 
 
 class DatamationServiceActor extends Actor with DeparturesService{
@@ -60,8 +62,20 @@ trait DeparturesService extends HttpService with SprayJsonSupport {
 
   private def issues(user: String) = {
 
-    pathPrefix("issues"){
-      path(Segment){ id =>
+    pathPrefix("upload"){
+      path(""){
+        post{
+          entity(as[String]) { data =>
+            val dataHandler = actorRefFactory.actorOf(Props[DataItemsDAO], name = "dataHandler")
+
+            CsvReader(data).entries map{row=>
+              dataHandler ! DataItem(row.head, row.tail.map(_.toInt).toVector)
+            }
+
+            complete("Saving to db")
+          }
+        }
+      }/*~
         get{
           parameter("projectName", "resolutionTypes", "components", "status", "springStart", "springEnd"){ (projectName, resolutionTypes, components, status, springStart, springEnd) =>
 
@@ -76,7 +90,7 @@ trait DeparturesService extends HttpService with SprayJsonSupport {
             complete(jiraResponse)
           }
         }
-      }/*~
+      }~
         get{
           parameters("productId"){ ids =>
             complete((actor ? SearchByProduct(ids)).mapTo[Configurations])
