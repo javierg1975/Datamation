@@ -28,12 +28,12 @@ import core._
 
 
 
-class DatalizeServiceActor extends Actor with DeparturesService{
+class DatalizeServiceActor extends Actor with DatalizeService{
   def actorRefFactory = context
   def receive = runRoute(departuresRoute)
 }
 
-trait DeparturesService extends HttpService  {
+trait DatalizeService extends HttpService  {
 
   implicit val timeout = Timeout(20 seconds)
 
@@ -68,8 +68,7 @@ trait DeparturesService extends HttpService  {
           entity(as[String]) { data =>
             val dataHandler = actorRefFactory.actorOf(Props[DataItemsDAO], name = "dataHandler")
 
-            val ent = CsvReader(data).entries
-            ent map{row=>
+            CsvReader(data).entries map{row=>
               dataHandler ! DataItem(row.head, row.tail.map{pair=>
                 val (header, data) = pair
                 (header, data.toInt)
@@ -91,26 +90,7 @@ trait DeparturesService extends HttpService  {
             }
           }
       }
-    } //pathPrefix
-  } //def
+    }
+  }
 
-
-  /*private def products(user: String) = {
-
-    val actor = actorRefFactory.actorOf(Props(new ProductService(user)))
-    pathPrefix("product"){
-      path(Segment){(program) =>
-        get{
-          complete((actor ? SearchProductsByProgram(program)).mapTo[ProductResults])
-        }
-      }~
-        get{
-          parameters("id", "configurationId"){ (id, config) =>
-            complete((actor ? ByProductId(id, config)).mapTo[Result])
-          }
-        }
-    } //pathPrefix
-  }*/ //def
-
-
-} //trait
+}
