@@ -129,44 +129,22 @@
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script type="text/javascript" src="js/ajax.js"></script>
+<!--
+
+/api/upload
+
+a,b,c,d,e	d,e,f
+
+-->
 
 <script type="text/javascript">
-function ajaxMe()
-	{
-        /* attach a submit handler to the form */
-        $("form#geocodeForm").submit(function (event) {
- 
-            /* stop form from submitting normally */
-            event.preventDefault();
- 
-            /* get some values from elements on the page: */
-            var $form = $(this);
- 
-            var url = $form.attr('action');
-            var data = $form.serialize()
-//Here I call the ajax and post the data
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: url,
-                data: data,
-                success: function (resp) {
-                    var jdata = eval(resp);
-                    var $jAlrtSuccess = $('<div>' + jdata.responseText + '</div>');
-/*On success, alert the appropriate message accordingly*/
-                    $($jAlrtSuccess).dialog({modal:true});
-                },
-                error: function (xhr, status, error) {
- 
-                    var $jAlrtError = $('<div>' + xhr.responseText + '</div>');
-/*On error, show us the RAW error what happened :( */
-                    $($jAlrtError).dialog({modal:true});
- 
-                }
-            });
-        });
-        return false;
-    }
+function ajaxMe() {
+
+	var url = "/api/upload";
+	sendRequest(url);
+
+}
 </script>
 
 </body>
