@@ -69,7 +69,10 @@ trait DeparturesService extends HttpService with SprayJsonSupport {
             val dataHandler = actorRefFactory.actorOf(Props[DataItemsDAO], name = "dataHandler")
 
             CsvReader(data).entries map{row=>
-              dataHandler ! DataItem(row.head, row.tail.map(_.toInt).toVector)
+              dataHandler ! DataItem(row.head, row.tail.map{pair=>
+                val (header, data) = pair
+                (header, data.toInt)
+              }.toVector)
             }
 
             complete("Saving to db")

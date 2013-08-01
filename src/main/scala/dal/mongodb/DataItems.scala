@@ -17,6 +17,6 @@ object DataItemsDAO extends SalatDAO[DataItem, String](MongoLabsCollections.data
 
 class DataItemsDAO extends Actor {
   def receive = {
-    case di: DataItem => sender ! DataItemsDAO.save(di)  //find(ref = MongoDBObject.empty).toList
+    case di: DataItem => sender ! DataItemsDAO.save(di)
   }
 }
