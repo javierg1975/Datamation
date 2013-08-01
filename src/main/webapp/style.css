@@ -745,7 +745,7 @@ legend, .step {
 	font-family: "Courier New", Courier, mono;
 	border: 1px solid #aaa;
 	background-color: #fff;
-	color: #fff;
+	color: #333;
 	overflow-x: hidden;
 	border-radius: 6px;
 	-moz-border-radius: 6px;
