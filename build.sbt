@@ -1,6 +1,6 @@
 import com.typesafe.sbt.SbtStartScript
 
-name := "Datamation"
+name := "Datalize"
 
 seq(SbtStartScript.startScriptForClassesSettings: _*)
 

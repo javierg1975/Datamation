@@ -4,7 +4,7 @@ import akka.actor._
 
 import akka.io.IO
 import spray.can.Http
-import rest.DatamationServiceActor
+import rest.DatalizeServiceActor
 
 object Boot extends App {
 
@@ -12,7 +12,7 @@ object Boot extends App {
   implicit val system = ActorSystem("on-spray-can")
 
   // create and start our service actor
-  val service = system.actorOf(Props[DatamationServiceActor], "demonstrator-service")
+  val service = system.actorOf(Props[DatalizeServiceActor], "datalize-service")
 
   val defaultPort = Option(System.getenv("PORT")).getOrElse("8080").toInt
 

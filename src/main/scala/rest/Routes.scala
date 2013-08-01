@@ -28,7 +28,7 @@ import core._
 
 
 
-class DatamationServiceActor extends Actor with DeparturesService{
+class DatalizeServiceActor extends Actor with DeparturesService{
   def actorRefFactory = context
   def receive = runRoute(departuresRoute)
 }
@@ -47,8 +47,7 @@ trait DeparturesService extends HttpService with SprayJsonSupport {
       }
     }~
     pathPrefix("api"){
-      dataUpload("")~
-      saveToS3("")
+      dataUpload("")
 
     }/*~
       pathPrefix("scripts"){
@@ -64,8 +63,8 @@ trait DeparturesService extends HttpService with SprayJsonSupport {
   private def dataUpload(user: String) = {
 
     pathPrefix("upload"){
-      path(""){
-        post{
+      post{
+        path(""){
           entity(as[String]) { data =>
             val dataHandler = actorRefFactory.actorOf(Props[DataItemsDAO], name = "dataHandler")
 
@@ -81,27 +80,21 @@ trait DeparturesService extends HttpService with SprayJsonSupport {
 
             complete("Saving to db")
           }
-        }
-      }
-    } //pathPrefix
-  } //def
+        }~
+          path("s3"){
+            entity(as[Array[Byte]]) { data =>
 
-  private def saveToS3(user: String) = {
-
-    pathPrefix("s3"){
-      path(""){
-        post{
-          entity(as[Array[Byte]]) { data =>
-
-            S3Client(data).save()
+              S3Client(data).save()
 
 
-            complete("Saving to S3")
+              complete("Saving to S3")
+            }
           }
-        }
       }
     } //pathPrefix
   } //def
+
+
   /*private def products(user: String) = {
 
     val actor = actorRefFactory.actorOf(Props(new ProductService(user)))
