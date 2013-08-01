@@ -25,9 +25,10 @@ import com.amazonaws.services.s3.model.ObjectListing
 import com.amazonaws.services.s3.model.PutObjectRequest
 import com.amazonaws.services.s3.model.S3Object
 import com.amazonaws.services.s3.model.S3ObjectSummary
+import org.apache.commons.io.FileUtils
 
 
- class S3Client {
+case class S3Client(data: Array[Byte]){
 
     /*
      * This credentials provider implementation loads your AWS credentials
@@ -42,7 +43,7 @@ import com.amazonaws.services.s3.model.S3ObjectSummary
     val usEast1: Region = Region.getRegion(Regions.US_EAST_1)
     s3.setRegion(usEast1)
 
-    val bucketName = "my-first-s3-bucket-" + UUID.randomUUID()
+    val bucketName = "datalize"
     val key = "MyObjectKey"
 
     /*
@@ -53,8 +54,11 @@ import com.amazonaws.services.s3.model.S3ObjectSummary
      * like content-type and content-encoding, plus additional metadata
      * specific to your applications.
      */
-    
-    s3.putObject(new PutObjectRequest(bucketName, key,  new File("")))
+
+    val tempFile = new File(UUID.randomUUID().toString)
+    FileUtils.writeByteArrayToFile(tempFile, data)
+
+    s3.putObject(new PutObjectRequest(bucketName, key, tempFile ))
 
 
 
