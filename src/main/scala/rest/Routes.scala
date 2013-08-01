@@ -10,6 +10,7 @@ import scala.concurrent.Future
 import concurrent.ExecutionContext.Implicits.global
 import util.transform.json.DemonstratorProtocol._
 import util.csv.CsvReader
+import client.aws.S3Client
 
 trait Debugger {
   import org.slf4j._
@@ -46,8 +47,8 @@ trait DeparturesService extends HttpService with SprayJsonSupport {
       }
     }~
     pathPrefix("api"){
-      issues("")/*~
-      products("")*/
+      dataUpload("")~
+      saveToS3("")
 
     }/*~
       pathPrefix("scripts"){
@@ -60,7 +61,7 @@ trait DeparturesService extends HttpService with SprayJsonSupport {
 
 
 
-  private def issues(user: String) = {
+  private def dataUpload(user: String) = {
 
     pathPrefix("upload"){
       path(""){
@@ -81,36 +82,26 @@ trait DeparturesService extends HttpService with SprayJsonSupport {
             complete("Saving to db")
           }
         }
-      }/*~
-        get{
-          parameter("projectName", "resolutionTypes", "components", "status", "springStart", "springEnd"){ (projectName, resolutionTypes, components, status, springStart, springEnd) =>
-
-            val jiraResponse = (for {
-              ss <- util.date.DateTime(springStart)
-              se <- util.date.DateTime(springEnd)
-            } yield IssueBrowser(projectName,
-                resolutionTypes.split(",").toList,
-                components.split(",").toList,
-                status, ss, se).response).getOrElse(Future(JiraResponse(List.empty[Issue])))
-
-            complete(jiraResponse)
-          }
-        }
-      }~
-        get{
-          parameters("productId"){ ids =>
-            complete((actor ? SearchByProduct(ids)).mapTo[Configurations])
-          }
-        }~
-        get{
-          parameter("moduleId"){ moduleId =>
-            complete((actor ? ByModules(moduleId.split(",").toList)).mapTo[Results])
-          }
-        }*/
+      }
     } //pathPrefix
   } //def
 
+  private def saveToS3(user: String) = {
 
+    pathPrefix("s3"){
+      path(""){
+        post{
+          entity(as[Array[Byte]]) { data =>
+
+            S3Client(data).save()
+
+
+            complete("Saving to S3")
+          }
+        }
+      }
+    } //pathPrefix
+  } //def
   /*private def products(user: String) = {
 
     val actor = actorRefFactory.actorOf(Props(new ProductService(user)))

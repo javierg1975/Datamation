@@ -44,7 +44,7 @@ case class S3Client(data: Array[Byte]){
     s3.setRegion(usEast1)
 
     val bucketName = "datalize"
-    val key = "MyObjectKey"
+    val key = "MyObjectKey"     //not sure what this is
 
     /*
      * Upload an object to your bucket - You can easily upload a file to
@@ -55,13 +55,13 @@ case class S3Client(data: Array[Byte]){
      * specific to your applications.
      */
 
-    val tempFile = new File(UUID.randomUUID().toString)
-    FileUtils.writeByteArrayToFile(tempFile, data)
 
-    s3.putObject(new PutObjectRequest(bucketName, key, tempFile ))
+    def save() = {
+      val tempFile = new File(UUID.randomUUID().toString)
+      FileUtils.writeByteArrayToFile(tempFile, data)
 
-
-
+      s3.putObject(new PutObjectRequest(bucketName, key, tempFile ))
+    }
 
 }
 
