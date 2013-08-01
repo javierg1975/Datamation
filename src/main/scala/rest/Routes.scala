@@ -33,7 +33,7 @@ class DatalizeServiceActor extends Actor with DeparturesService{
   def receive = runRoute(departuresRoute)
 }
 
-trait DeparturesService extends HttpService with SprayJsonSupport {
+trait DeparturesService extends HttpService  {
 
   implicit val timeout = Timeout(20 seconds)
 

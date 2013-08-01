@@ -43,7 +43,7 @@ case class S3Client(data: Array[Byte]){
     val usEast1: Region = Region.getRegion(Regions.US_EAST_1)
     s3.setRegion(usEast1)
 
-    val bucketName = "datalize"
+    val bucketName = "Datalize"
     val key = "MyObjectKey"     //not sure what this is
 
     /*
