@@ -66,16 +66,16 @@ trait DatalizeService extends HttpService  {
       post{
         path(""){
           entity(as[String]) { data =>
-            val dataHandler = actorRefFactory.actorOf(Props[DataItemsDAO], name = "dataHandler")
+            //val dataHandler = actorRefFactory.actorOf(Props[DataItemsDAO])
 
             CsvReader(data).entries map{row=>
-              dataHandler ! DataItem(row.head, row.tail.map{pair=>
+              actorRefFactory.actorOf(Props[DataItemsDAO]) ! DataItem(row.head, row.tail.map{pair=>
                 val (header, data) = pair
                 (header, data.toInt)
               }.toVector)
             }
 
-            actorRefFactory.stop(dataHandler)
+            //actorRefFactory.stop(dataHandler)
 
             complete("Saving to db")
           }

@@ -16,7 +16,12 @@ import core.DataItem
 object DataItemsDAO extends SalatDAO[DataItem, String](MongoLabsCollections.dataItems)
 
 class DataItemsDAO extends Actor {
+  import context._
+
   def receive = {
-    case di: DataItem => sender ! DataItemsDAO.save(di)
+    case di: DataItem => {
+      DataItemsDAO.save(di)
+      stop(self)
+    }
   }
 }
