@@ -12,7 +12,49 @@
 		<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 	<link rel="apple-touch-icon" href="images/favicon.ico"/>
 	<link rel="shortcut icon" href="images/favicon.ico" />
-	
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+ <style>
+    #draggable {width: 200px; border:1px solid black; }
+    #draggable2 { width: 200px; border:1px solid black; }
+    #draggable3 { width: 200px; border:1px solid black; }
+    #draggable4 { width: 200px; border:1px solid black; }
+    #draggable5 { height: 300px; border:1px solid black; }
+    #draggable6 { height: 300px; border:1px solid black; }
+    #draggable7 { height: 250px; border:1px solid black;}
+    #draggable8 { height: 250px; border:1px solid black; }
+
+  </style>
+  
+<script>
+  $(function() {
+    $( "#draggable" ).draggable();
+  });
+   $(function() {
+    $( "#draggable2" ).draggable();
+  });
+   $(function() {
+    $( "#draggable3" ).draggable();
+  });
+   $(function() {
+    $( "#draggable4" ).draggable();
+  });
+   $(function() {
+    $( "#draggable5" ).draggable();
+  });
+   $(function() {
+    $( "#draggable6" ).draggable();
+  });
+   $(function() {
+    $( "#draggable7" ).draggable();
+  });
+   $(function() {
+    $( "#draggable8" ).draggable();
+  });
+  </script>
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 	</head>
 <body>
   <div id="header">
@@ -21,8 +63,6 @@
 	      <div id="logo" class="fourcol first">
         
         <img src="images/logo.jpg" width="300px" alt="Datalyze" style="margin-top:-17px;" />
-             <p style="    margin-top: -20px;    margin-left: 27px;    font-size: 12px;    color: #626262;">You bring the data, we bring the understanding.</p>
-
       </div>
       <div class="nav fourcol">
       	<a href="index.html">Datalyze</a>
@@ -35,14 +75,29 @@
   
   <div id="generator">
     <div class="wrap">
-PANES<br>IMAGES
+<h3>Create your presentation here:</h3>
+<img id="draggable" src="images/file_two_juniors.jpg" >
+<img id="draggable2" src="images/file_two_seniors.jpg" >
+<img id="draggable3" src="images/gifone_juniors.gif" >
+<img id="draggable4" src="images/gifone_seniors.gif" >
+<img id="draggable5" src="images/file_one_juniors.jpg" >
+<img id="draggable6" src="images/file_one_seniors.jpg" >
+<img id="draggable7" src="images/giftwo_juniors.gif" >
+<img id="draggable8" src="images/giftwo_seniors.gif" >
+
+
+
+
+
+
+<br><br><br><br><br><br><br><br><br><br><br>
   	</div><!--/wrap -->
   </div><!--/generator -->
 
    					
 
 
-<div id="footer" style="margin-top: 30%;">
+<div id="footer">
 	<div class="wrap clearfix">
 				<ul class="nav">
 			  <li><h2>&copy; July 27, 2011 TwoPeat. Don't steal our page.</h2></li>
