@@ -31,35 +31,41 @@
   
   <div id="generator">
     <div class="wrap">
-    	   <center> <form id="geocodeForm" method="post" name="geocodeForm" action="processor.php">
+    	   <center> <form id="geocodeForm" method="post" name="geocodeForm" action="">
            
-<textarea id="textfield" type="text" placeholder="Copy and paste your data here" name="data" style="width:700px;height:200px;"></textarea><br /><br />
-<input type="submit" id="mapnow_button" value="Datalyze Now" class="button green"/>
 
-</form>
+<?php
 
+$data = $_POST['data'];
 
-</center>  	    
+$rows = explode('
+', $data);
 
-        
-        <!--<form id="geocodeForm" name="geocodeForm" onsubmit="return false;" action="api/upload">
-      <div class="fieldset">
-        <h1>Copy and then paste your data below:</h1>
-  	    <div id="sourceWrap">
-    	    <div id="deleteMe" class="tableize" style="height: 130px;">
-      	   <br><br> <table class="tableize">
-        	  
-                <tr style="border: none;"><td><center>Copy and paste your data here</center></td></tr>
-      	    </table>
-    	    </div>
-    	    <textarea style="display: none;" id="sourceData" wrap="off" rows="5" cols="80" title="">Text</textarea>
-  	    </div>
+foreach ($rows as $id => $array)
+	{$rows[$id] = explode('	', $array);}
 
- 
-  	    <input type="submit" id="mapnow_button" value="Datalyze Now" class="button green" />
-  	    <span id="validate_status" class="status">&nbsp;</span>
-      </div>
-    </form> -->
+$fp = fopen('data.csv', 'w');
+
+foreach ($rows as $fields) {
+    fputcsv($fp, $fields);
+}
+
+fclose($fp);
+
+exec("Rscript datalyze.R");
+
+while(!file_exists("gifone.gif"))
+	{sleep(1);}
+
+?>
+<table>
+	<tr>
+		<td><img src='gifone.gif'></td>
+		<td><img src='file_one.jpg'></td>
+		<td><img src='file_two.jpg'></td>
+	</tr>
+</table>
+
 
   	</div><!--/wrap -->
   </div><!--/generator -->
@@ -110,7 +116,7 @@
     <td style="width:33%; padding: 15px 15px 15px 15px;">
    
             
-            <p>Do you need more than just simple visualizations? Do you want to help grow your business and predict your success more effectively? Go pro with us and we will give you the tools to guide you into a more profitable future. Through advanced data visualization you will be able to wow clients, predict behavior, track sales and so much more. Donâ€™t let your competition get ahead of you. Stay on top of your industry and increase your revenue stream through effective learning and data interpretation.</p>
+            <p>Do you need more than just simple visualizations? Do you want to help grow your business and predict your success more effectively? Go pro with us and we will give you the tools to guide you into a more profitable future. Through advanced data visualization you will be able to wow clients, predict behavior, track sales and so much more. Don’t let your competition get ahead of you. Stay on top of your industry and increase your revenue stream through effective learning and data interpretation.</p>
          	
     </td>
   </tr>
